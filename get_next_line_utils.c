@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 16:13:32 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/01/14 14:31:36 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/01/14 15:48:50 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ char			*ft_strchr(const char *s, int c)
 
 char			*ft_substr(char const *s, unsigned int start, size_t len)
 {
+	printf("%s || %d || %zu \n", s, start, len);
 	size_t	i;
 	size_t	j;
 	char	*str;
@@ -46,6 +47,7 @@ char			*ft_substr(char const *s, unsigned int start, size_t len)
 		i++;
 	}
 	str[j] = 0;
+	printf("SORTIE : %s \n", str);
 	return (str);
 }
 

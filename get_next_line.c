@@ -6,19 +6,20 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 16:16:15 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/01/14 14:34:18 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/01/14 15:51:16 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static size_t	ft_len(const char *s)
+size_t			ft_len(const char *s)
 {
 	size_t i;
 
 	i = 0;
 	while (s[i] != '\0' && s[i] != '\n')
 		i++;
+	printf(" %s || %zu \n", s, i);
 	return (i);
 }
 
@@ -90,7 +91,9 @@ int				get_next_line(int fd, char **line)
 	static char	*lines = NULL;
 	int			end_buff;
 
-	if (fd < 0 || BUFFER_SIZE < 1 || line == NULL || read(fd, buf, 0) < 0)
+	printf("Je commence le code \n");
+	read(fd, buf, 0);
+	if (fd < 0 || BUFFER_SIZE < 1 || read(fd, buf, 0) < 0)
 		return (-1);
 	if (!(lines = ft_alloc(0)))
 		return (-1);
@@ -103,9 +106,12 @@ int				get_next_line(int fd, char **line)
 		free(line_tmp);
 	}
 	*line = ft_substr(lines, 0, ft_len(lines));
+	printf("line : %s \n", line[1]);
+	printf("substr seg fault \n");
 	if ((ft_save(lines, &a) != NULL) && a == 1)
 		return (1);
 	free(lines);
 	lines = NULL;
+	printf("Fin du programme\n");
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 16:13:23 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/01/14 14:30:56 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/01/14 14:42:12 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@
 # include <fcntl.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdio.h>
 
-static size_t	ft_len(const char *s);
+size_t			ft_len(const char *s);
 int				get_next_line(int fd, char **line);
 char			*ft_alloc(size_t size);
 char			*ft_strchr(const char *s, int c);
