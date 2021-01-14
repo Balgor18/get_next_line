@@ -6,11 +6,26 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 16:16:15 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/01/13 18:24:12 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/01/14 13:05:33 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+char	*ft_alloc(size_t size)
+{
+	char	*s;
+	char	*ptr;
+
+	s = (char *)malloc(sizeof(char) * (size + 1));
+	if (s == NULL)
+		return (NULL);
+	size = size + 1;
+	ptr = s;
+	while (size-- > 0)
+		*ptr++ = '\0';
+	return (s);
+}
 
 /*
 **  fd(files descriptor) = 0 1 2
@@ -39,16 +54,16 @@ int		get_next_line(int fd, char **line)
 	*/
 	if (fd < 0 || BUFFER_SIZE < 1 || line == NULL || read(fd, buf, 0) < 0)
 		return (-1);
-	/*
-	** pour read() le dernier 0 correspond a read only
-	**	return -1 pour erreur
-	*/
+/*
+** pour read() le dernier 0 correspond a read only
+**	return -1 pour erreur
+*/
 	if (!(lines = ft_alloc(0)))
 		return (-1);
 /*
 ** verifie si il peut alloc sans problem
 ** -------------------------------------
-** cas ou nous sommes en fin de ligne
+** boucle tant que strchr n'est pas en fin de ligne
 */
 	while (ft_strchr(lines, '\n') == NULL &&
 		(end_buff = read(fd, buf, BUFFER_SIZE)) > 0)
@@ -58,4 +73,5 @@ int		get_next_line(int fd, char **line)
 		lines = ft_strjoin(line_tmp, buf);
 		free(line_tmp);
 	}
+	*line = ft_substr(lines, 0, ft_bufflen(lines));
 }

@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 16:13:23 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/01/13 16:13:24 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/01/14 12:39:39 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <fcntl.h>
 # include <stdlib.h>
 
-int get_next_line(int fd, char **line);
+int	get_next_line(int fd, char **line);
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 2
