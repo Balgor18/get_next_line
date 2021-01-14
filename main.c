@@ -7,6 +7,7 @@ int		main(void)
 	int		fd;
 	char	**line;
 
+	line = NULL;
 	if ((fd = open("MYFILE", O_RDONLY)) < 0)
 		return (-1);
 	get_next_line(fd, line);

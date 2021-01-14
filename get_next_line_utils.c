@@ -6,13 +6,13 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 16:13:32 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/01/13 18:24:57 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/01/14 14:31:36 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_strchr(const char *s, int c)
+char			*ft_strchr(const char *s, int c)
 {
 	char *str;
 
@@ -26,31 +26,43 @@ char	*ft_strchr(const char *s, int c)
 	return (str);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char			*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	int		i;
-	int		len1;
-	int		len2;
+	size_t	i;
+	size_t	j;
 	char	*str;
 
-	if (s1 && s2)
+	if (!(str = (char*)malloc(sizeof(*s) * (len + 1))))
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (s[i])
 	{
-		len1 = ft_strlen((char *)s1);
-		len2 = ft_strlen((char *)s2);
-		str = (char*)malloc(sizeof(char) * (len1 + len2 + 1));
-		if (str == NULL)
-			return (NULL);
-		i = -1;
-		while (s1[++i])
-			str[i] = s1[i];
-		i = -1;
-		while (s2[++i])
+		if (i >= start && j < len)
 		{
-			str[len1] = s2[i];
-			len1++;
+			str[j] = s[i];
+			j++;
 		}
-		str[len1] = '\0';
-		return (str);
+		i++;
 	}
-	return (NULL);
+	str[j] = 0;
+	return (str);
+}
+
+char			*ft_strcpy(char *dest, char *src)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while (src[i] != '\0')
+		i++;
+	while (j != i)
+	{
+		dest[j] = src[j];
+		j++;
+	}
+	dest[j] = '\0';
+	return (dest);
 }

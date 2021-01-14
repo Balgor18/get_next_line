@@ -6,13 +6,52 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 16:16:15 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/01/14 13:05:33 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/01/14 14:34:18 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_alloc(size_t size)
+static size_t	ft_len(const char *s)
+{
+	size_t i;
+
+	i = 0;
+	while (s[i] != '\0' && s[i] != '\n')
+		i++;
+	return (i);
+}
+
+char			*ft_strjoin(char const *s1, char const *s2)
+{
+	int		i;
+	int		len1;
+	int		len2;
+	char	*str;
+
+	if (s1 && s2)
+	{
+		len1 = ft_len((char *)s1);
+		len2 = ft_len((char *)s2);
+		str = (char*)malloc(sizeof(char) * (len1 + len2 + 1));
+		if (str == NULL)
+			return (NULL);
+		i = -1;
+		while (s1[++i])
+			str[i] = s1[i];
+		i = -1;
+		while (s2[++i])
+		{
+			str[len1] = s2[i];
+			len1++;
+		}
+		str[len1] = '\0';
+		return (str);
+	}
+	return (NULL);
+}
+
+char			*ft_alloc(size_t size)
 {
 	char	*s;
 	char	*ptr;
@@ -27,44 +66,34 @@ char	*ft_alloc(size_t size)
 	return (s);
 }
 
-/*
-**  fd(files descriptor) = 0 1 2
-**  0 = stdin entree standart
-**  1 = stdout sortie standart
-**  2 = stderr erreur standart
-*/
-
-int		get_next_line(int fd, char **line)
+static char		*ft_save(char *lines, size_t *a)
 {
-	char		*line_tmp; // temporaire donc pas besoin de gardez ses valeurs
+	if (ft_strchr(lines, '\n'))
+	{
+		ft_strcpy(lines, ft_strchr(lines, '\n') + 1);
+		return (lines);
+	}
+	if (ft_len(lines) > 0)
+	{
+		ft_strcpy(lines, ft_strchr(lines, '\0'));
+		*a = 0;
+		return (lines);
+	}
+	return (NULL);
+}
+
+int				get_next_line(int fd, char **line)
+{
+	char		*line_tmp;
 	size_t		a;
 	static char	buf[BUFFER_SIZE + 1];
 	static char	*lines = NULL;
 	int			end_buff;
 
-	/*
-	** lines est la variable qui sera afficher dans le terminal
-	** donc essentiel qu'elle soit static
-	** -------------------------------------------------
-	** Pourquoi j'aurai besoin que mon buffer soit static
-	** car a chaque tours il prendre le nombre de caracteres
-	** en plus et le buffer vas reasigner
-	** ----------------------------------
-	** verif que la buffer size est bonne
-	*/
 	if (fd < 0 || BUFFER_SIZE < 1 || line == NULL || read(fd, buf, 0) < 0)
 		return (-1);
-/*
-** pour read() le dernier 0 correspond a read only
-**	return -1 pour erreur
-*/
 	if (!(lines = ft_alloc(0)))
 		return (-1);
-/*
-** verifie si il peut alloc sans problem
-** -------------------------------------
-** boucle tant que strchr n'est pas en fin de ligne
-*/
 	while (ft_strchr(lines, '\n') == NULL &&
 		(end_buff = read(fd, buf, BUFFER_SIZE)) > 0)
 	{
@@ -73,5 +102,10 @@ int		get_next_line(int fd, char **line)
 		lines = ft_strjoin(line_tmp, buf);
 		free(line_tmp);
 	}
-	*line = ft_substr(lines, 0, ft_bufflen(lines));
+	*line = ft_substr(lines, 0, ft_len(lines));
+	if ((ft_save(lines, &a) != NULL) && a == 1)
+		return (1);
+	free(lines);
+	lines = NULL;
+	return (0);
 }
