@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 14:57:46 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/01/18 15:48:25 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/01/18 15:54:45 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ int		get_next_line(int fd, char **line)
 	char	buf[BUFFER_SIZE];
 	char	*line_tmp;
 
-	while (read(fd, buf, BUFFER_SIZE))
+	while (read(fd, buf, BUFFER_SIZE))// read renvoie le nombre de caractere lu 
 	{
-		if (ft_ver_buf)
+		if (ft_ver_buf(buf))
 			ft_malloc(line_tmp, BUFFER_SIZE);
 		ft_strlcpy(line_tmp, buf, BUFFER_SIZE);
 		free(line_tmp);
