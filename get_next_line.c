@@ -5,108 +5,62 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/13 16:16:15 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/01/14 16:37:15 by fcatinau         ###   ########.fr       */
+/*   Created: 2021/01/18 14:57:46 by fcatinau          #+#    #+#             */
+/*   Updated: 2021/01/18 15:48:25 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t			ft_len(const char *s)
+int		ft_ver_buf(char *buf)
 {
 	size_t i;
 
 	i = 0;
-	while (s[i] != '\0' && s[i] != '\n')
+	while (buf[i])
+	{
+		if (buf[i] != '\n')
+			return (0);
 		i++;
-	//printf(" %s || %zu \n", s, i);
+	}
+	return (1);
+}
+
+void	ft_malloc(char *c, int size)
+{
+	if (!(malloc(sizeof(c) * size)))
+		return (0);
+}
+
+size_t	ft_strlcpy(char *dest, const char *src, size_t size)
+{
+	size_t		i;
+
+	i = 0;
+	if (size > 0)
+	{
+		while (src[i] && i < (size - 1))
+		{
+			dest[i] = src[i];
+			i++;
+		}
+		dest[i] = '\0';
+	}
+	while (src[i])
+		i++;
 	return (i);
 }
 
-char			*ft_strjoin(char const *s1, char const *s2)
+int		get_next_line(int fd, char **line)
 {
-	int		i;
-	int		len1;
-	int		len2;
-	char	*str;
+	char	buf[BUFFER_SIZE];
+	char	*line_tmp;
 
-	if (s1 && s2)
+	while (read(fd, buf, BUFFER_SIZE))
 	{
-		len1 = ft_len((char *)s1);
-		len2 = ft_len((char *)s2);
-		str = (char*)malloc(sizeof(char) * (len1 + len2 + 1));
-		if (str == NULL)
-			return (NULL);
-		i = -1;
-		while (s1[++i])
-			str[i] = s1[i];
-		i = -1;
-		while (s2[++i])
-		{
-			str[len1] = s2[i];
-			len1++;
-		}
-		str[len1] = '\0';
-		return (str);
-	}
-	return (NULL);
-}
-
-char			*ft_alloc(size_t size)
-{
-	char	*s;
-	char	*ptr;
-
-	if (!(s = (char *)malloc(sizeof(char) * (size + 1))))
-		return (NULL);
-	size = size + 1;
-	ptr = s;
-	while (size-- > 0)
-		*ptr++ = '\0';
-	return (s);
-}
-
-static char		*ft_save(char *lines, size_t *a)
-{
-	if (ft_strchr(lines, '\n'))
-	{
-		ft_strcpy(lines, ft_strchr(lines, '\n') + 1);
-		return (lines);
-	}
-	if (ft_len(lines) > 0)
-	{
-		ft_strcpy(lines, ft_strchr(lines, '\0'));
-		*a = 0;
-		return (lines);
-	}
-	return (NULL);
-}
-
-int				get_next_line(int fd, char **line)
-{
-	char		*line_tmp;
-	size_t		a;
-	static char	buf[BUFFER_SIZE + 1];
-	static char	*lines = NULL;
-	int			end_buff;
-
-	read(fd, buf, 0);
-	if (fd < 0 || BUFFER_SIZE < 1 || read(fd, buf, 0) < 0)
-		return (-1);
-	if (!(lines = ft_alloc(0)))
-		return (-1);
-	while (ft_strchr(lines, '\n') == NULL &&
-		(end_buff = read(fd, buf, BUFFER_SIZE)) > 0)
-	{
-		buf[end_buff] = '\0';
-		line_tmp = lines;
-		lines = ft_strjoin(line_tmp, buf);
+		if (ft_ver_buf)
+			ft_malloc(line_tmp, BUFFER_SIZE);
+		ft_strlcpy(line_tmp, buf, BUFFER_SIZE);
 		free(line_tmp);
 	}
-	*line = ft_substr(lines, 0, ft_len(lines));
-	if ((ft_save(lines, &a) != NULL) && a == 1)
-		return (1);
-	free(lines);
-	lines = NULL;
-	return (0);
 }
