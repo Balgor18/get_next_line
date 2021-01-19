@@ -6,31 +6,11 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 14:57:46 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/01/19 16:22:13 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/01/19 22:59:46 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-int			ft_ver_buf(char buf)
-{
-	int bo;
-
-	bo = 1;
-	if (!buf || buf == '\n')
-		bo = 0;
-	return (bo);
-}
-
-int			ft_strlen(char *c)
-{
-	int i;
-
-	i = 0;
-	while (c[i])
-		i++;
-	return (i);
-}
 
 char		*ft_malloc(int size)
 {
@@ -41,56 +21,51 @@ char		*ft_malloc(int size)
 	return (c);
 }
 
-char		*ft_strcpy(char *dest, char src)
+char		*ft_while_cpy(int len, char *tmp, char *buf, int *bre)
 {
-	int j;
+	unsigned int	i;
 
-	j = 0;
-	while (dest[j])
-		j++;
-	dest[j] = src;
-	j++;
-	dest[j] = '\0';
-	return (dest);
+	i = 0;
+	while (i < len)
+	{
+		if (ft_ver_buf(buf[i]))
+		{
+			if (!(tmp = malloc(sizeof(char *) * len)))
+				return (NULL);
+			tmp = ft_strcpy(tmp, buf[i]);
+			free(tmp);
+		}
+		else
+		{
+			*bre = 1;
+			break ;
+		}
+		i++;
+	}
+	return (tmp);
 }
 
 int			get_next_line(int fd, char **line)
 {
 	char			buf[BUFFER_SIZE];
-	char			*line_tmp;
+	static char		*line_tmp;
 	size_t			len;
-	unsigned int	i;
 	int				bre;
 
 	bre = 0;
-	i = 0;
 	line_tmp = NULL;
 	while ((len = read(fd, buf, BUFFER_SIZE)))
 	{
-		while (i < len)// je boucle sur len pour voir toute les valeurs qu'il y a dans i
-		{
-			if (ft_ver_buf(buf[i]))// je verifie que buf[i] ne soit pas = a \n
-			{
-				if (!(line_tmp = ft_malloc(len)))// change la size du malloc
-					return (-1);
-				line_tmp = ft_strcpy(line_tmp, buf[i]);
-				free(line_tmp);
-			}
-			else
-			{
-				bre = 1;
-				break ;
-			}
-			printf("line_tmp %s\n", line_tmp);
-			i++;
-		}
+		line_tmp = ft_while_cpy(len, line_tmp, buf, &bre);
 		if (bre)
 			break ;
-		i = 0;
 	}
-	printf("Le seg fqult \n");
-	printf("ft_strlen %p \n", ft_malloc(ft_strlen(line_tmp)));
-	*line = ft_malloc(ft_strlen(line_tmp));
+	printf("line_tmp = %s \n",line_tmp);
+	//*line = ft_malloc(ft_strlen(line_tmp));
+	//if (!(*line = (char *)malloc(sizeof(char) * ft_strlen(line_tmp))))
+	//	return (-1);
+	//printf("line_tmp = %s \n",line_tmp);
+	//ft_strlcpy(*line, line_tmp, ft_strlen(line_tmp));
 	*line = line_tmp;
 	return (0);
 }
