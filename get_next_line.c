@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 14:57:46 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/01/19 22:59:46 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/01/20 14:22:31 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,28 @@ char		*ft_while_cpy(int len, char *tmp, char *buf, int *bre)
 	return (tmp);
 }
 
+char		*get_line(char *str)
+{
+	int		i;
+	char	*rtn;
+
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i] && str[i] != '\n')
+		i++;
+	if (!(rtn = malloc(sizeof(char) * (i + 1))))
+		return (0);
+	i = 0;
+	while (str[i] && str[i] != '\n')
+	{
+		rtn[i] = str[i];
+		i++;
+	}
+	rtn[i] = '\0';
+	return (rtn);
+}
+
 int			get_next_line(int fd, char **line)
 {
 	char			buf[BUFFER_SIZE];
@@ -60,12 +82,8 @@ int			get_next_line(int fd, char **line)
 		if (bre)
 			break ;
 	}
-	printf("line_tmp = %s \n",line_tmp);
-	//*line = ft_malloc(ft_strlen(line_tmp));
-	//if (!(*line = (char *)malloc(sizeof(char) * ft_strlen(line_tmp))))
-	//	return (-1);
-	//printf("line_tmp = %s \n",line_tmp);
-	//ft_strlcpy(*line, line_tmp, ft_strlen(line_tmp));
-	*line = line_tmp;
+	printf("line_tmp = %s \n", line_tmp);
+	*line = get_line(line_tmp);
+	printf("Je sors de GNL\n");
 	return (0);
 }
