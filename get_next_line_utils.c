@@ -6,41 +6,85 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 21:14:58 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/01/20 13:27:27 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/01/20 15:44:51 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int			ft_ver_buf(char buf)
-{
-	int bo;
-
-	bo = 1;
-	if (!buf || buf == '\n')
-		bo = 0;
-	return (bo);
-}
-
-int			ft_strlen(char *c)
+size_t		ft_strlen(const char *s)
 {
 	int i;
 
 	i = 0;
-	while (c[i])
+	if (!s)
+		return (0);
+	while (s[i] != '\0')
 		i++;
 	return (i);
 }
 
-char		*ft_strcpy(char *dest, char src)
+char		*join_str(char const *char1, char const *char2)
 {
-	int j;
+	//size_t	s1_len;
+	//size_t	s2_len;
+	size_t	line_max_len;
+	char	*tmp;
 
-	j = 0;
-	while (dest[j])
-		j++;
-	dest[j] = src;
-	j++;
-	dest[j] = '\0';
-	return (dest);
+	if (!char1 && !char2)
+		return (0);
+	//s1_len = ft_strlen((char *)char1);
+	//s2_len = ft_strlen((char *)char2);
+	//line_max_len = s1_len + s2_len + 1;
+	line_max_len = ft_strlen((char *)char1) + ft_strlen((char *)char2) + 1;
+	if (!(tmp = malloc(sizeof(char) * line_max_len)))
+		return (0);
+	//ft_memmove(tmp, char1, s1_len);
+	ft_memmove(tmp, char1, ft_strlen((char *)char1));
+	ft_memmove(tmp + ft_strlen((char *)char1), char2, ft_strlen((char *)char2));
+	tmp[line_max_len - 1] = '\0';
+	free((char *)char1);// regardez pourquoi a ton besoin e la free
+	return (tmp);
+}
+
+void	*ft_memmove(void *dst, const void *src, size_t len)
+{
+	size_t			i;
+	unsigned char	*a;
+	unsigned char	*b;
+
+	if (!dst && !src)
+		return (NULL);
+	i = 0;
+	a = (unsigned char *)dst;
+	b = (unsigned char *)src;
+	if (a > b)
+		while (i < len)
+		{
+			a[len - 1] = b[len - 1];
+			len--;
+		}
+	else
+		while (i < len)
+		{
+			a[i] = b[i];
+			i++;
+		}
+	return (dst);
+}
+
+int			ft_is_end(char *str)
+{
+	int i;
+
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i])
+	{
+		if (str[i] == '\n')
+			return (1);
+		i++;
+	}
+	return (0);
 }

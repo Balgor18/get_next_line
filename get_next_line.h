@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 10:29:57 by rchallie          #+#    #+#             */
-/*   Updated: 2021/01/20 13:32:37 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/01/20 15:44:38 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
 # include <fcntl.h>
 
 int			get_next_line(int fd, char **line);
-int			ft_strlen(char *c);
-char		*ft_strcpy(char *dest, char src);
-int			ft_ver_buf(char buf);
-size_t		ft_strlcpy(char *dest, const char *src, size_t size);
+void		*ft_memmove(void *dst, const void *src, size_t len);
+int			ft_is_end(char *str);
+char		*join_str(char const *char1, char const *char2);
+size_t		ft_strlen(const char *s);
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 2
