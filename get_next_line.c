@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 14:57:46 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/01/20 15:49:58 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/01/21 13:27:54 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@ int			get_next_line(int fd, char **line)
 		save = join_str(save, buffer);
 	}
 	free(buffer);
-	*line = ft_get_save_line(save);
-	save = get_save(save);
+	*line = get_line(save);
+	save = ft_get_save_line(save);
 	if (lire == 0)
 		return (0);
 	return (1);

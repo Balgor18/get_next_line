@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 21:14:58 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/01/20 15:44:51 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/01/21 13:17:11 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,28 +26,22 @@ size_t		ft_strlen(const char *s)
 
 char		*join_str(char const *char1, char const *char2)
 {
-	//size_t	s1_len;
-	//size_t	s2_len;
 	size_t	line_max_len;
 	char	*tmp;
 
 	if (!char1 && !char2)
 		return (0);
-	//s1_len = ft_strlen((char *)char1);
-	//s2_len = ft_strlen((char *)char2);
-	//line_max_len = s1_len + s2_len + 1;
 	line_max_len = ft_strlen((char *)char1) + ft_strlen((char *)char2) + 1;
 	if (!(tmp = malloc(sizeof(char) * line_max_len)))
 		return (0);
-	//ft_memmove(tmp, char1, s1_len);
 	ft_memmove(tmp, char1, ft_strlen((char *)char1));
 	ft_memmove(tmp + ft_strlen((char *)char1), char2, ft_strlen((char *)char2));
 	tmp[line_max_len - 1] = '\0';
-	free((char *)char1);// regardez pourquoi a ton besoin e la free
+	free((char *)char1);
 	return (tmp);
 }
 
-void	*ft_memmove(void *dst, const void *src, size_t len)
+void		*ft_memmove(void *dst, const void *src, size_t len)
 {
 	size_t			i;
 	unsigned char	*a;
