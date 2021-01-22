@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/18 14:57:46 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/01/21 13:50:27 by fcatinau         ###   ########.fr       */
+/*   Created: 2021/01/21 13:53:45 by fcatinau          #+#    #+#             */
+/*   Updated: 2021/01/21 14:48:48 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char		*ft_get_save_line(char *save)
 {
