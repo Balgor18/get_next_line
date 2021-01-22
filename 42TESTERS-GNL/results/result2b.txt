@@ -138,17 +138,17 @@ Right number of lines
 | OOOOOOOOOOOOOO     |
 | OOOOOOOOOOOOOO     |
 |  OOOOOOOOOOOOOO    |
-||  OOOOOOOOOOOOOO    |
+|  OOOOOOOOOOOOOO    |
 |  OOOOOOOOOOOOOO    |
 |   OOOOOOOOOOOOOO   |
 |   OOOOOOOOOOOOOO   |
 |   OOOOOOOOOOOOOO   |
 |   OOOOOOOOOOOOOO   |
-    OOOOOOOOOOOOOO  |
 |    OOOOOOOOOOOOOO  |
-||    OOOOO \_| \_|O  |
+|    OOOOOOOOOOOOOO  |
+|    OOOOO \_| \_|O  |
 |    OOOO \/  \/  \  |
-    OOOO (o   )o  ) |
+|    OOOO (o   )o  ) |
 |    O/c   \__/ --.  |
 |    O\_   ,     -'  |
 |     O|  '\_______) |

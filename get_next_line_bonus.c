@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 13:53:45 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/01/21 14:48:48 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/01/22 21:04:58 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char		*get_line(char *str)
 int			get_next_line(int fd, char **line)
 {
 	char			*buffer;
-	static char		*save;
+	static char		*save[1024];
 	int				lire;
 
 	lire = 1;
@@ -72,7 +72,7 @@ int			get_next_line(int fd, char **line)
 		return (-1);
 	if (!(buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 		return (-1);
-	while (!ft_is_end(save) && lire != 0)
+	while (!ft_is_end(save[fd]) && lire != 0)
 	{
 		if ((lire = read(fd, buffer, BUFFER_SIZE)) == -1)
 		{
@@ -80,11 +80,11 @@ int			get_next_line(int fd, char **line)
 			return (-1);
 		}
 		buffer[lire] = '\0';
-		save = join_str(save, buffer);
+		save[fd] = join_str(save[fd], buffer);
 	}
 	free(buffer);
-	*line = get_line(save);
-	save = ft_get_save_line(save);
+	*line = get_line(save[fd]);
+	save[fd] = ft_get_save_line(save[fd]);
 	if (lire == 0)
 		return (0);
 	return (1);

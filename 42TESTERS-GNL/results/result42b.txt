@@ -138,23 +138,24 @@ Right number of lines
 | OOOOOOOOOOOOOO     |
 | OOOOOOOOOOOOOO     |
 |  OOOOOOOOOOOOOO    |
-|   OOO|  OOOOOOOOOOOOOO    |
+|  OOOOOOOOOOOOOO    |
 |  OOOOOOOOOOOOOO    |
 |   OOOOOOOOOOOOOO   |
 |   OOOOOOOOOOOOOO   |
 |   OOOOOOOOOOOOOO   |
-|    OOOOOOOOOOOOOOOOO   |
-|    OOOOO \_| \_|O  |
-|  OOOOOOOO  |
+|   OOOOOOOOOOOOOO   |
 |    OOOOOOOOOOOOOO  |
+|    OOOOOOOOOOOOOO  |
+|    OOOOO \_| \_|O  |
 |    OOOO \/  \/  \  |
+|    OOOO (o   )o  ) |
 |    O/c   \__/ --.  |
 |    O\_   ,     -'  |
 |     O|  '\_______) |
 |      |       _)    |
-
-  OOOO (o   )o  ) |
+|      |      |      |
 |      oooooooo      |
+|     /        \     |
 
 Right number of lines
 
