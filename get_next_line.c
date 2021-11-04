@@ -182,49 +182,30 @@ int	ft_lstaddnew_front(struct s_data *data)
 	return (1);
 }
 
-//
-// cas 1elem buf = \n => len_cpy neg donc cas particulier
-//
+
 void ft_cpy_buffer_list_free(t_gnl **gnl, char *line, size_t len_cpy)
 {
 	t_gnl *tmp;
 
-	// if (rest->status)
-	// {
-	// 	tmp = (*gnl)->next;
-	// 	// line -= BUFF_SIZE;
-	// 	// dprintf(2, "197 free gnl = %p\n", *gnl);
-	// 	free(*gnl);
-	// 	*gnl = tmp;
-	// }
-	// if (*(*gnl)->buf == '\0')
-	// {
-	// 	tmp = (*gnl)->next;
-	// 	// line -= BUFF_SIZE;
-	// 	// dprintf(2, "197 free gnl = %p\n", *gnl);
-	// 	free(*gnl);
-	// 	*gnl = tmp;
-	// }
-	if (*gnl) // le premier maillon
+	if (*(*gnl)->buf == '\0' && (len_cpy % BUFF_SIZE) != 0)
 	{
-		// printf("%s\n", &line[-31]);
-		ft_memcpy(line - (len_cpy % BUFF_SIZE), (*gnl)->buf, len_cpy % BUFF_SIZE);
-		line -= len_cpy % BUFF_SIZE;
 		tmp = (*gnl)->next;
-		// dprintf(2, "197 free gnl = %p\n", *gnl);
 		free(*gnl);
 		*gnl = tmp;
 	}
-	// printf("avant boucle %p\n", *gnl);
+	if (*gnl) // le premier maillon
+	{
+		ft_memcpy(line - (len_cpy % BUFF_SIZE), (*gnl)->buf, len_cpy % BUFF_SIZE);
+		line -= len_cpy % BUFF_SIZE;
+		tmp = (*gnl)->next;
+		free(*gnl);
+		*gnl = tmp;
+	}
 	while (*gnl)
 	{
 		ft_memcpy(line - BUFF_SIZE, (*gnl)->buf, BUFF_SIZE);
 		line -= BUFF_SIZE;
-		// if ((*gnl)->next)
 		tmp = (*gnl)->next;
-		// printf("Error\n");
-		// dprintf(2, "207 free gnl = %p\n", *gnl);
-		// dprintf(2, "------------\ngnl->buf = %s\ngnl->next = %p\n------------\n",(*gnl)->buf, (*gnl)->next);
 		free(*gnl);
 		// dprintf(2, "209 free gnl = %p\n", *gnl);
 		// printf("Error 2\n");
