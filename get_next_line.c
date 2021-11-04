@@ -46,37 +46,37 @@ struct 	s_mem
 
 void	ft_print_buffer_chains(t_gnl *gnl)
 {
-	// dprintf(2, "%s--------------------------------------\n", "\033[33m");
-	// dprintf(2, "\n\tBUFFER LIST:\n");
+	dprintf(2, "%s--------------------------------------\n", "\033[33m");
+	dprintf(2, "\n\tBUFFER LIST:\n");
 	while (gnl)
 	{
-		// dprintf(2, ">>[%.*s] |%p|\n", BUFF_SIZE, gnl->buf, gnl->next);
+		dprintf(2, ">>[%.*s] |%p|\n", BUFF_SIZE, gnl->buf, gnl->next);
 		gnl = gnl->next;
 	}
-	// dprintf(2, "--------------------------------------%s\n",  "\033[0m");
+	dprintf(2, "--------------------------------------%s\n",  "\033[0m");
 }
 
-// void	ft_print_data(struct s_data *data, char *line)
-// {
-// 	// dprintf(2, "\n%s_______________________________________\n",  "\033[32m");
-// 	// dprintf(2, "========================================\n");
-// 	// dprintf(2, "\tSTRUCTURE DATA\n");
-// 	// dprintf(2, "Line [%s]\n\n", line);
-// 	// dprintf(2, "Read Value [%lu]\n", data->rd_size);
-// 	// dprintf(2, "Line Size [%lu]\n", data->line_size);
-// 	// dprintf(2, "Buffer list Size [%lu]\n", data->list_buff_size);
-// 	// dprintf(2, "Pointer on newline >%p<\n", data->ptrchr);
-// 	// dprintf(2 , "ERROR Value : [%s]\n", e_message[data->error * -1]);
-// 	ft_print_buffer_chains(data->gnl);
+void	ft_print_data(struct s_data *data, char *line)
+{
+	dprintf(2, "\n%s_______________________________________\n",  "\033[32m");
+	dprintf(2, "========================================\n");
+	dprintf(2, "\tSTRUCTURE DATA\n");
+	dprintf(2, "Line [%s]\n\n", line);
+	dprintf(2, "Read Value [%lu]\n", data->rd_size);
+	dprintf(2, "Line Size [%lu]\n", data->line_size);
+	dprintf(2, "Buffer list Size [%lu]\n", data->list_buff_size);
+	dprintf(2, "Pointer on newline >%p<\n", data->ptrchr);
+	dprintf(2 , "ERROR Value : [%s]\n", e_message[data->error * -1]);
+	ft_print_buffer_chains(data->gnl);
 
-// }
+}
 
-// void	ft_print_res(struct s_mem *rest)
-// {
+void	ft_print_res(struct s_mem *rest)
+{
 
-// 	// dprintf(2, "\tREST = (%lu) [%.*s]\n", rest->size, BUFF_SIZE, rest->str);
-// 	// dprintf(2, "STATUS >%d<\n ", rest->status);
-// }
+	dprintf(2, "\tREST = (%lu) [%.*s]\n", rest->size, BUFF_SIZE, rest->str);
+	dprintf(2, "STATUS >%d<\n ", rest->status);
+}
 
 void	*ft_memchr(const void *s, int c, size_t n)
 {
@@ -185,17 +185,26 @@ int	ft_lstaddnew_front(struct s_data *data)
 //
 // cas 1elem buf = \n => len_cpy neg donc cas particulier
 //
-void ft_cpy_buffer_list_free(t_gnl **gnl, struct s_mem *rest, char *line, size_t len_cpy)
+void ft_cpy_buffer_list_free(t_gnl **gnl, char *line, size_t len_cpy)
 {
 	t_gnl *tmp;
 
-	if (rest->status)
-	{
-		tmp = (*gnl)->next;
-		// dprintf(2, "197 free gnl = %p\n", *gnl);
-		free(*gnl);
-		*gnl = tmp;
-	}
+	// if (rest->status)
+	// {
+	// 	tmp = (*gnl)->next;
+	// 	// line -= BUFF_SIZE;
+	// 	// dprintf(2, "197 free gnl = %p\n", *gnl);
+	// 	free(*gnl);
+	// 	*gnl = tmp;
+	// }
+	// if (*(*gnl)->buf == '\0')
+	// {
+	// 	tmp = (*gnl)->next;
+	// 	// line -= BUFF_SIZE;
+	// 	// dprintf(2, "197 free gnl = %p\n", *gnl);
+	// 	free(*gnl);
+	// 	*gnl = tmp;
+	// }
 	if (*gnl) // le premier maillon
 	{
 		// printf("%s\n", &line[-31]);
@@ -273,6 +282,7 @@ int ft_no_newline_in_rest(struct s_data *data, struct s_mem *rest, char **line)
 int	ft_no_buffer_in_read(struct s_data *data, struct s_mem *rest, int fd)
 {
 	int	ret;
+	// t_gnl *tmp;
 
 	// dprintf(2, "segfault 0.2.2\n");
 	ret = read(fd, data->gnl->buf, BUFF_SIZE);
@@ -287,6 +297,11 @@ int	ft_no_buffer_in_read(struct s_data *data, struct s_mem *rest, int fd)
 	}
 	else if (ret == 0)// EOF
 	{
+		// printf("gnl->buf = %.s\n", data->gnl->buf);
+		// printf("gnl->next->buf = %p\n", data->gnl->next);
+		// tmp = data->gnl->next;
+		// free(data->gnl);
+		// data->gnl = tmp;
 		data->rd_size = 0;
 		rest->status = 1;
 		if (data->list_buff_size || rest->size)
@@ -317,8 +332,8 @@ int	ft_newline_in_buffer(struct s_data *data, struct s_mem *rest, char **line)
 		ft_memcpy(*line, rest->str, rest->size);
 		(*line)[data->line_size] = '\0';
 
-		// ft_cpy_buffer_list_free(&(data->gnl), *line + data->line_size, data->line_size - rest->size);
-		ft_cpy_buffer_list_free(&(data->gnl), rest, *line + data->line_size, data->line_size - rest->size);
+		ft_cpy_buffer_list_free(&(data->gnl), *line + data->line_size, data->line_size - rest->size);
+		// ft_cpy_buffer_list_free(&(data->gnl), rest, *line + data->line_size, data->line_size - rest->size);
 		*rest = (struct s_mem){};
 		return (1);
 	}
@@ -347,7 +362,8 @@ int	ft_newline_in_buffer(struct s_data *data, struct s_mem *rest, char **line)
 		// rd_size = 10
 		// rest->size = data->ptrchr - data->gnl->buf
 
-		ft_cpy_buffer_list_free(&(data->gnl), rest, *line + data->line_size, (data->rd_size - rest->size) - 1);
+		ft_cpy_buffer_list_free(&(data->gnl), *line + data->line_size, (data->rd_size - rest->size) - 1);
+		// ft_cpy_buffer_list_free(&(data->gnl), rest, *line + data->line_size, (data->rd_size - rest->size) - 1);
 		// printf("380 line = %s\nline = %s\n",*line, *line - 4);
 		// printf("-----------\nrest->size = %zu\ndata->rd->size = %zu\ndata->ptrchr = %zu\ndata->gnl->buf = %zu\ndata->ptrchr -data->gnl->buf = %zu - %zu\n-----------\n",rest->size, data->rd_size, data->ptrchr, data->gnl->buf, data->ptrchr - data->gnl->buf);
 		// rest->size = data->rd_size - (data->ptrchr - data->gnl->buf) - 1;
@@ -380,7 +396,6 @@ int	get_next_line(int fd, char **line )//, int reset)
 	// }
 	// dprintf(2, "segfault 0.1\n");
 	// IF REST
-
 	if (rest.size && !ft_no_newline_in_rest(&data, &rest, line)) // SEARCH IN REST -> stop if error || no newline
 	{
 		return (1);
