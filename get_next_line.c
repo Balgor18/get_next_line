@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 14:57:46 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/01/21 13:30:19 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/11/06 18:40:47 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,4 +14,5 @@
 
 int			get_next_line(int fd, char **line)
 {
+	// do nothing
 }
