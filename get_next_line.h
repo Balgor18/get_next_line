@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:03:13 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/11/06 14:33:50 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/11/06 18:33:30 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ struct s_data
 	int		error;
 	t_gnl	*gnl;
 
-}		t_data;
+};
 
 struct s_mem
 {
@@ -65,7 +65,11 @@ struct s_mem
 
 int		get_next_line(int fd, char **line, int reset);
 // int		get_next_line(int fd, char **line);
+int		ft_lstaddnew_front(struct s_data *data);
+int		ft_no_newline_in_rest(struct s_data *data,
+			struct s_mem *rest, char **line);
 
+void	ft_cpy_buffer_list_free(t_gnl **gnl, char *line, size_t len_cpy);
 void	*ft_memchr(const void *s, int c, size_t n);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
 void	*ft_memmove(void *dst, const void *src, size_t len);
