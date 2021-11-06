@@ -1,43 +1,70 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/06 14:03:13 by fcatinau          #+#    #+#             */
+/*   Updated: 2021/11/06 14:33:50 by fcatinau         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <string.h>
-#include <sys/errno.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <string.h>
+
+// # include <sys/errno.h>
+// # include <stdio.h>
 
 # ifndef BUFF_SIZE
 #  define BUFF_SIZE 2
 # endif
 
-typedef struct	s_gnl
+enum e_error
+{
+	E_SUCCESS = 0,
+	E_MALLOC_FAIL = -1,
+	E_READ_FAIL = -2,
+};
+
+// const char	*e_message[] =
+// {
+// 	"-",
+// 	"Malloc Has FAILED!",
+// 	"Read Has FAILED!"
+// };
+
+typedef struct s_gnl
 {
 	struct s_gnl	*next;
 	char			buf[BUFF_SIZE];
 }				t_gnl;
 
-struct	s_data
+struct s_data
 {
 	size_t	line_size;
 	size_t	rd_size;
-	size_t	list_buff_size;
+	size_t	list_size;
 	char	*ptrchr;
 
 	int		error;
 	t_gnl	*gnl;
 
-};
+}		t_data;
 
-struct 	s_mem
+struct s_mem
 {
 	char	str[BUFF_SIZE];
 	size_t	size;
 	int		status;
-};
+}		t_mem;
 
-// int	get_next_line(int fd, char **line, int reset);
-int	get_next_line(int fd, char **line);
+int		get_next_line(int fd, char **line, int reset);
+// int		get_next_line(int fd, char **line);
 
 void	*ft_memchr(const void *s, int c, size_t n);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
